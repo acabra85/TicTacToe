@@ -56,12 +56,12 @@ public class BoardViewInteractive extends JFrame implements BoardView {
     }
 
     private JPanel buildResultsPanel() {
-        JPanel resultsPanel = new JPanel(new FlowLayout());
-        resultsPanel.add(resultsLabel);
+        JPanel resultsPanel = new JPanel(new BorderLayout());
+        resultsPanel.add(resultsLabel, BorderLayout.CENTER);
         this.restartButton.addActionListener(e -> {
             executor.restartGame();
         });
-        resultsPanel.add(this.restartButton);
+        resultsPanel.add(this.restartButton, BorderLayout.PAGE_END);
         return resultsPanel;
     }
 
