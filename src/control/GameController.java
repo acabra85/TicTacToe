@@ -48,25 +48,16 @@ class GameController implements GameActionExecutor {
     }
 
     void play(ViewType type, int h, int w) {
-        do {
-            switch (type) {
-                case CONSOLE:
-                    playConsole(type, h, w);
-                    break;
-                case INTERACTIVE:
-                    playInteractive(type, h, w);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown view type: " + type);
-            }
-          restartGame();
-        } while (playNextRound());
-    }
-
-    private boolean playNextRound() {
-        int res = JOptionPane.showConfirmDialog(null, "Play one more round? (y/n)", "",
-                JOptionPane.YES_NO_OPTION);
-        return res == 0;
+        switch (type) {
+            case CONSOLE:
+                playConsole(type, h, w);
+                break;
+            case INTERACTIVE:
+                playInteractive(type, h, w);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown view type: " + type);
+        }
     }
 
     private void playInteractive(ViewType type, int h, int w) {
@@ -100,20 +91,23 @@ class GameController implements GameActionExecutor {
     }
 
     private void playConsole(ViewType type, int h, int w) {
-        view = BoardViewFactory.buildView(this, type, h, w);
-        while(board.gameActive()) {
-            int[][] cBoard = board.get();
-            view.renderBoard(cBoard);
-            int desiredMove = view.getMoveCell(cBoard, currentTurn, false, -1);
-            while (!board.isValidMove(desiredMove)) {
-                System.out.println("invalid move " + desiredMove);
-                desiredMove = view.getMoveCell(cBoard, currentTurn, true, desiredMove);
+        do {
+            view = BoardViewFactory.buildView(this, type, h, w);
+            while(board.gameActive()) {
+                int[][] cBoard = board.get();
+                view.renderBoard(cBoard);
+                int desiredMove = view.getMoveCell(cBoard, currentTurn, false, -1);
+                while (!board.isValidMove(desiredMove)) {
+                    System.out.println("invalid move " + desiredMove);
+                    desiredMove = view.getMoveCell(cBoard, currentTurn, true, desiredMove);
+                }
+                board.move(currentTurn, desiredMove);
+                currentTurn = board.getNextTurn();
             }
-            board.move(currentTurn, desiredMove);
-            currentTurn = board.getNextTurn();
-        }
-        view.renderBoard(board.get());
-        view.announceResult(board.getGameResult(), winnersButtonsMap.get(board.getWinnerLine()));
+            view.renderBoard(board.get());
+            view.announceResult(board.getGameResult(), winnersButtonsMap.get(board.getWinnerLine()));
+            restartGame();
+        } while(view.playAgain());
     }
 
     @Override

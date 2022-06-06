@@ -3,6 +3,9 @@ package view;
 
 import java.util.List;
 import model.Turn;
+import utils.ResourceBundleUTF8;
+
+import javax.swing.*;
 
 /**
  * Describe your class
@@ -17,4 +20,11 @@ public interface BoardView {
     void announceResult(int gameResult, List<Integer> winningPath);
 
     void restartGame(List<Integer> winningPath);
+
+    default boolean playAgain() {
+        return JOptionPane.showConfirmDialog(null, getTranslations().getString(TranslationConstants.PLAY_AGAIN_LABEL), "",
+                JOptionPane.YES_NO_OPTION) == 0;
+    }
+
+    ResourceBundleUTF8 getTranslations();
 }

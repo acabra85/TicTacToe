@@ -12,4 +12,5 @@ class TranslationConstants {
     static final String EMPTY_LABEL = "empty_box_label";
     static final String GAME_RESULT_DRAW_LABEL = "game_results_draw_label";
     static final String INVALID_PLAYER_MOVE = "invalid_player_move";
+    static final String PLAY_AGAIN_LABEL = "play_another_round";
 }

@@ -155,4 +155,8 @@ public class BoardViewInteractive extends JFrame implements BoardView {
         actionButtons.forEach(e-> e.setEnabled(false));
     }
 
+    @Override
+    public ResourceBundleUTF8 getTranslations() {
+        return translations;
+    }
 }

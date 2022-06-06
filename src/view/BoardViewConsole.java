@@ -87,4 +87,9 @@ public class BoardViewConsole implements BoardView {
         System.out.println("pending restart implementation");
     }
 
+    @Override
+    public ResourceBundleUTF8 getTranslations() {
+        return translations;
+    }
+
 }
