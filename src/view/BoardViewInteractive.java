@@ -111,12 +111,12 @@ public class BoardViewInteractive extends JFrame implements BoardView {
     }
 
     @Override
-    public String renderAssistant(int[][] board, Turn currentTurn) {
+    public String renderAssistant(int[][] board, Turn currentTurn, String messageBanner) {
         return null;
     }
 
     @Override
-    public int getMoveCell(int[][] board, Turn turn) {
+    public int getMoveCell(int[][] board, Turn turn, boolean invalidMove, Integer invalidPos) {
         return 0;
     }
 

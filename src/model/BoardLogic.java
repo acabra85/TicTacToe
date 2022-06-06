@@ -3,6 +3,8 @@ package model;
 
 import view.WinnerLineNames;
 
+import java.util.Arrays;
+
 /**
  * Describe your class
  */
@@ -44,9 +46,9 @@ public class BoardLogic {
         if (isValidMove(moveCell)) {
             int pos = 1;
             for (int i = 0; i < HEIGHT; i++) {
-                for (int j = 0; j < WIDTH; j++) {
-                    if (board[i][j] == 0 && pos++ == moveCell) {
-                        board[i][j] = getNum(currentTurn);
+                for (int j = 0; j < WIDTH; j++, ++pos) {
+                    if (board[i][j] == 0 && pos == moveCell) {
+                        board[i][j] = currentTurn.id;
                         activePlayer = currentTurn;
                         availableMoves--;
                         return;
@@ -56,10 +58,6 @@ public class BoardLogic {
         } else {
             System.out.println("invalid mode");
         }
-    }
-
-    private int getNum(Turn currentTurn) {
-        return currentTurn == Turn.CIRCLE ? -1 : 1;
     }
 
     public boolean gameActive() {
@@ -72,7 +70,7 @@ public class BoardLogic {
     }
 
     private WinnerLineNames calculateWinnerLine() {
-        int num = getNum(activePlayer);
+        int num = activePlayer.id;
 
         if(board[0][0] == num && board[0][1] == num && board[0][2] == num) return WinnerLineNames.H1;
         if(board[1][0] == num && board[1][1] == num && board[1][2] == num) return WinnerLineNames.H2;
@@ -93,13 +91,13 @@ public class BoardLogic {
     }
 
     public boolean isValidMove(int desiredMove) {
-        if (desiredMove > availableMoves || desiredMove <= 0) {
+        if (availableMoves < 1 || desiredMove < 1 || desiredMove > HEIGHT * WIDTH) {
             return false;
         }
         int pos = 1;
         for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
-                if (board[i][j]==0 && pos++ == desiredMove) {
+            for (int j = 0; j < WIDTH; j++, ++pos) {
+                if (board[i][j]==0 && pos == desiredMove) {
                     return true;
                 }
             }
@@ -108,7 +106,7 @@ public class BoardLogic {
     }
 
     public int getGameResult() {
-        return noWinner() ? 0 : getNum(activePlayer);
+        return noWinner() ? 0 : activePlayer.id;
     }
 
     public Turn getCurrentTurn() {
@@ -120,10 +118,8 @@ public class BoardLogic {
     }
 
     public void restartGame() {
-        for (int row[]: board) {
-            for (int i = 0; i < board.length; i++) {
-                row[i] = 0;
-            }
+        for (int[] row: board) {
+            Arrays.fill(row, 0);
         }
         this.activePlayer = Turn.CIRCLE;
         this.availableMoves = HEIGHT * WIDTH;

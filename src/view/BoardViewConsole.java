@@ -38,14 +38,14 @@ public class BoardViewConsole implements BoardView {
     }
 
     @Override
-    public String renderAssistant(int[][] board, Turn currentTurn) {
+    public String renderAssistant(int[][] board, Turn currentTurn, String bannerMessage) {
         int pos = 1;
-        StringBuilder sb = new StringBuilder(String.format("--> Player '%s' choose your cell to play\n", currentTurn.value));
+        StringBuilder sb = new StringBuilder(String.format("%s--> Player '%s' choose your cell to play\n", bannerMessage, currentTurn.value));
         for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
+            for (int j = 0; j < WIDTH; j++, ++pos) {
                 sb.append(" ")
-                        .append(board[i][j] == 0 ? pos++ : "_")
-                        .append(" ");
+                    .append(board[i][j] == 0 ? pos : Turn.getSymbol(board[i][j]))
+                    .append(" ");
             }
             sb.append("\n");
         }
@@ -53,8 +53,9 @@ public class BoardViewConsole implements BoardView {
     }
 
     @Override
-    public int getMoveCell(int[][] board, Turn turn) {
-        String message = renderAssistant(board, turn);
+    public int getMoveCell(int[][] board, Turn turn, boolean invalidMove, Integer invalidPos) {
+        String errorMessage = invalidMove ? String.format(translations.getString(TranslationConstants.INVALID_PLAYER_MOVE)+"\n", invalidPos) : "";
+        String message = renderAssistant(board, turn, errorMessage);
         String answer = null;
         boolean exception = false;
         int ansCell = -1;

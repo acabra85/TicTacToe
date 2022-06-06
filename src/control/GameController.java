@@ -15,6 +15,8 @@ import view.BoardViewFactory;
 import view.ViewType;
 import view.WinnerLineNames;
 
+import javax.swing.*;
+
 /**
  * Describe your class
  */
@@ -46,16 +48,25 @@ class GameController implements GameActionExecutor {
     }
 
     void play(ViewType type, int h, int w) {
-        switch (type) {
-            case CONSOLE:
-                playConsole(type, h, w);
-                break;
-            case INTERACTIVE:
-                playInteractive(type, h, w);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown view type: " + type);
-        }
+        do {
+            switch (type) {
+                case CONSOLE:
+                    playConsole(type, h, w);
+                    break;
+                case INTERACTIVE:
+                    playInteractive(type, h, w);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown view type: " + type);
+            }
+          restartGame();
+        } while (playNextRound());
+    }
+
+    private boolean playNextRound() {
+        int res = JOptionPane.showConfirmDialog(null, "Play one more round? (y/n)", "",
+                JOptionPane.YES_NO_OPTION);
+        return res == 0;
     }
 
     private void playInteractive(ViewType type, int h, int w) {
@@ -93,11 +104,10 @@ class GameController implements GameActionExecutor {
         while(board.gameActive()) {
             int[][] cBoard = board.get();
             view.renderBoard(cBoard);
-            view.renderAssistant(cBoard, currentTurn);
-            int desiredMove = view.getMoveCell(cBoard, currentTurn);
+            int desiredMove = view.getMoveCell(cBoard, currentTurn, false, -1);
             while (!board.isValidMove(desiredMove)) {
                 System.out.println("invalid move " + desiredMove);
-                desiredMove = view.getMoveCell(cBoard, currentTurn);
+                desiredMove = view.getMoveCell(cBoard, currentTurn, true, desiredMove);
             }
             board.move(currentTurn, desiredMove);
             currentTurn = board.getNextTurn();
