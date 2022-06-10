@@ -3,6 +3,7 @@ package view;
 
 import control.GameActionExecutor;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.*;
 import model.Turn;
 import utils.ResourceBundleUTF8;
@@ -15,16 +16,18 @@ public class BoardViewConsole implements BoardView {
     private final int WIDTH;
     private final int HEIGHT;
     private final ResourceBundleUTF8 translations;
+    private final String playerNextMoveLabel;
 
     BoardViewConsole(GameActionExecutor executor, int h, int w) {
         HEIGHT = h;
         WIDTH = w;
         this.translations = executor.getTranslations();
+        playerNextMoveLabel = "%s --> " + translations.getString(TranslationConstants.PLAYER_CHOOSE_MOVE) + "\n";
     }
 
     @Override
-    public void renderBoard(int board[][]) {
-        StringBuilder boardStr = new StringBuilder("===BOARD====\n");
+    public void renderBoard(int[][] board) {
+        StringBuilder boardStr = new StringBuilder("====BOARD====\n");
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 boardStr.append(" ")
@@ -33,14 +36,14 @@ public class BoardViewConsole implements BoardView {
             }
             boardStr.append("\n");
         }
-        boardStr.append("============");
+        boardStr.append("=============");
         System.out.println(boardStr);
     }
 
     @Override
     public String renderAssistant(int[][] board, Turn currentTurn, String bannerMessage) {
         int pos = 1;
-        StringBuilder sb = new StringBuilder(String.format("%s--> Player '%s' choose your cell to play\n", bannerMessage, currentTurn.value));
+        StringBuilder sb = new StringBuilder(String.format(playerNextMoveLabel, bannerMessage, currentTurn.value));
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++, ++pos) {
                 sb.append(" ")

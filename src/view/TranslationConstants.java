@@ -6,6 +6,7 @@ package view;
  */
 class TranslationConstants {
 
+    public static final String PLAYER_CHOOSE_MOVE = "player_choose_move";
     static final String GAME_TITLE_LABEL = "game_title_label";
     static final String GAME_RESULTS_WINNER_LABEL = "game_results_winner_label";
     static final String RESTART_GAME_LABEL = "restart_game_label";

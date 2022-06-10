@@ -11,7 +11,7 @@ import javax.swing.*;
  * Describe your class
  */
 public interface BoardView {
-    void renderBoard(int board[][]);
+    void renderBoard(int[][] board);
 
     String renderAssistant(int[][] board, Turn currentTurn, String bannerMessage);
 

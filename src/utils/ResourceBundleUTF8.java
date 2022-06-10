@@ -1,7 +1,6 @@
 
 package utils;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -16,9 +15,6 @@ public class ResourceBundleUTF8 {
     }
 
     public String getString(String key) {
-        if (this.bundle.getLocale() == Locale.ENGLISH) {
-            return this.bundle.getString(key);
-        }
-        return new String(this.bundle.getString(key).getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+        return this.bundle.getString(key);
     }
 }
