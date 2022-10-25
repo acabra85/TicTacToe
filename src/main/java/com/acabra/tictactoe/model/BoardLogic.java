@@ -4,30 +4,36 @@ package com.acabra.tictactoe.model;
 import com.acabra.tictactoe.view.WinnerLineNames;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Describe your class
- */
 public class BoardLogic {
 
     private static final int HEIGHT = 3;
     private static final int WIDTH = 3;
+    private static final int IS_AVAILABLE = 0;
 
     private final int[][] board;
     private int availableMoves;
     private Turn activePlayer;
     private WinnerLineNames winnerLine;
+    private final Map<Integer, Move> keys;
 
     public BoardLogic() {
         activePlayer = Turn.CIRCLE;
         availableMoves = HEIGHT * WIDTH;
         this.winnerLine = WinnerLineNames.NO_WINNER;
         board = new int[HEIGHT][WIDTH];
+        int idx = 0;
+        Map<Integer, Move> map = new HashMap<>();
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
-                board[i][j] = 0;
+                board[i][j] = IS_AVAILABLE;
+                map.put(++idx, new Move(i, j));
             }
         }
+        this.keys = Collections.unmodifiableMap(map);
     }
 
     public int[][] get() {
@@ -42,22 +48,16 @@ public class BoardLogic {
         return copy;
     }
 
-    public void move(Turn currentTurn, int moveCell) {
-        if (isValidMove(moveCell)) {
-            int pos = 1;
-            for (int i = 0; i < HEIGHT; i++) {
-                for (int j = 0; j < WIDTH; j++, ++pos) {
-                    if (board[i][j] == 0 && pos == moveCell) {
-                        board[i][j] = currentTurn.id;
-                        activePlayer = currentTurn;
-                        availableMoves--;
-                        return;
-                    }
-                }
-            }
-        } else {
-            System.out.println("invalid mode");
+    public boolean move(Turn currentTurn, int moveCell) {
+        Move move = this.keys.get(moveCell);
+        if (null != move && isValidMove(move)) {
+            board[move.i][move.j] = currentTurn.id;
+            activePlayer = currentTurn;
+            availableMoves--;
+            return true;
         }
+        System.out.println("invalid mode");
+        return false;
     }
 
     public boolean gameActive() {
@@ -90,19 +90,12 @@ public class BoardLogic {
         return this.winnerLine;
     }
 
-    public boolean isValidMove(int desiredMove) {
-        if (availableMoves < 1 || desiredMove < 1 || desiredMove > HEIGHT * WIDTH) {
-            return false;
-        }
-        int pos = 1;
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++, ++pos) {
-                if (board[i][j]==0 && pos == desiredMove) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    public boolean isValidMove(Move move) {
+        return move != null && board[move.i][move.j] == IS_AVAILABLE;
+    }
+
+    public boolean isValidMove(int move) {
+        return isValidMove(this.keys.get(move));
     }
 
     public int getGameResult() {
@@ -124,5 +117,14 @@ public class BoardLogic {
         this.activePlayer = Turn.CIRCLE;
         this.availableMoves = HEIGHT * WIDTH;
         this.winnerLine = WinnerLineNames.NO_WINNER;
+    }
+
+    static class Move {
+        int i;
+        int j;
+        Move(int i, int j) {
+            this.i = i;
+            this.j = j;
+        }
     }
 }

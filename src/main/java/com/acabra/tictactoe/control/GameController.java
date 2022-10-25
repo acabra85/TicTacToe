@@ -30,7 +30,7 @@ public class GameController implements GameActionExecutor {
         this.board = new BoardLogic();
         this.currentTurn = board.getCurrentTurn();
         this.bundle = new ResourceBundleUTF8("tictactoe_translations", locale);
-        winnersButtonsMap = Collections.unmodifiableMap(new HashMap<WinnerLineNames, List<Integer>>(){{
+        this.winnersButtonsMap = Collections.unmodifiableMap(new HashMap<WinnerLineNames, List<Integer>>(){{
             put(WinnerLineNames.H1, Arrays.asList(0, 1, 2));
             put(WinnerLineNames.H2, Arrays.asList(3, 4, 5));
             put(WinnerLineNames.H3, Arrays.asList(6, 7, 8));
@@ -68,8 +68,7 @@ public class GameController implements GameActionExecutor {
 
     public boolean reportMove(final int viewMove) {
         int desiredMove = getDesiredMoveFromView(viewMove);
-        if (board.isValidMove(desiredMove)) {
-            board.move(currentTurn, desiredMove);
+        if (board.move(currentTurn, desiredMove)) {
             currentTurn = board.getNextTurn();
             return true;
         }
@@ -77,19 +76,7 @@ public class GameController implements GameActionExecutor {
     }
 
     private int getDesiredMoveFromView(final int viewMove) {
-        int available = 0;
-        int indexOnGrid = 0;
-        for (int row[] : board.get()) {
-            for (int i = 0; i < row.length; i++, indexOnGrid++) {
-                if (row[i] == 0) {
-                    available++;
-                }
-                if (viewMove == indexOnGrid) {
-                    return available;
-                }
-            }
-        }
-        return -1;
+        return viewMove + 1;
     }
 
     private void playConsole(ViewType type, int h, int w) {

@@ -14,7 +14,7 @@ public enum Symbol {
         this.value = c;
     }
 
-    public static String getvalue(int i) {
+    public static String getValue(int i) {
         return i == 0 ? EMPTY.value : (i < 0 ? CIRCLE.value : CROSS.value);
     }
 }

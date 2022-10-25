@@ -30,7 +30,7 @@ public class BoardViewConsole implements BoardView {
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
                 boardStr.append(" ")
-                        .append(Symbol.getvalue(board[i][j]))
+                        .append(Symbol.getValue(board[i][j]))
                         .append(" ");
             }
             boardStr.append("\n");
@@ -56,7 +56,9 @@ public class BoardViewConsole implements BoardView {
 
     @Override
     public int getMoveCell(int[][] board, Turn turn, boolean invalidMove, Integer invalidPos) {
-        String errorMessage = invalidMove ? String.format(translations.getString(TranslationConstants.INVALID_PLAYER_MOVE)+"\n", invalidPos) : "";
+        String errorMessage = invalidMove
+                ? String.format(translations.getString(TranslationConstants.INVALID_PLAYER_MOVE)+"\n", invalidPos)
+                : "";
         String message = renderAssistant(board, turn, errorMessage);
         String answer = null;
         boolean exception = false;
