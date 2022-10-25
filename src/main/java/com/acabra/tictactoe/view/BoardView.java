@@ -1,9 +1,9 @@
 
-package view;
+package com.acabra.tictactoe.view;
 
 import java.util.List;
-import model.Turn;
-import utils.ResourceBundleUTF8;
+import com.acabra.tictactoe.model.Turn;
+import com.acabra.tictactoe.utils.ResourceBundleUTF8;
 
 import javax.swing.*;
 

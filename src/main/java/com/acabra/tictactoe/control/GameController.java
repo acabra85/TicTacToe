@@ -1,5 +1,5 @@
 
-package control;
+package com.acabra.tictactoe.control;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,20 +7,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import model.BoardLogic;
-import model.Turn;
-import utils.ResourceBundleUTF8;
-import view.BoardView;
-import view.BoardViewFactory;
-import view.ViewType;
-import view.WinnerLineNames;
-
-import javax.swing.*;
+import com.acabra.tictactoe.model.BoardLogic;
+import com.acabra.tictactoe.model.Turn;
+import com.acabra.tictactoe.utils.ResourceBundleUTF8;
+import com.acabra.tictactoe.view.BoardView;
+import com.acabra.tictactoe.view.BoardViewFactory;
+import com.acabra.tictactoe.view.ViewType;
+import com.acabra.tictactoe.view.WinnerLineNames;
 
 /**
  * Describe your class
  */
-class GameController implements GameActionExecutor {
+public class GameController implements GameActionExecutor {
 
     private final BoardLogic board;
     private final ResourceBundleUTF8 bundle;
@@ -28,7 +26,7 @@ class GameController implements GameActionExecutor {
     private BoardView view;
     private final Map<WinnerLineNames, List<Integer>> winnersButtonsMap;
 
-    GameController(Locale locale) {
+    private GameController(Locale locale) {
         this.board = new BoardLogic();
         this.currentTurn = board.getCurrentTurn();
         this.bundle = new ResourceBundleUTF8("tictactoe_translations", locale);
@@ -47,7 +45,11 @@ class GameController implements GameActionExecutor {
         }});
     }
 
-    void play(ViewType type, int h, int w) {
+    public static GameController of(Locale locale) {
+        return new GameController(locale);
+    }
+
+    public void play(ViewType type, int h, int w) {
         switch (type) {
             case CONSOLE:
                 playConsole(type, h, w);

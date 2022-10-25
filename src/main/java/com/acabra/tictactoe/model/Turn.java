@@ -1,5 +1,5 @@
 
-package model;
+package com.acabra.tictactoe.model;
 
 /**
  * Reports active player

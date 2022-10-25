@@ -1,12 +1,11 @@
 
-package view;
+package com.acabra.tictactoe.view;
 
-import control.GameActionExecutor;
+import com.acabra.tictactoe.control.GameActionExecutor;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.*;
-import model.Turn;
-import utils.ResourceBundleUTF8;
+import com.acabra.tictactoe.model.Turn;
+import com.acabra.tictactoe.utils.ResourceBundleUTF8;
 
 /**
  * Describe your class

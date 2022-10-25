@@ -1,7 +1,7 @@
 
-package model;
+package com.acabra.tictactoe.model;
 
-import view.WinnerLineNames;
+import com.acabra.tictactoe.view.WinnerLineNames;
 
 import java.util.Arrays;
 

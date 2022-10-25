@@ -1,7 +1,7 @@
 
-package view;
+package com.acabra.tictactoe.view;
 
-import control.GameActionExecutor;
+import com.acabra.tictactoe.control.GameActionExecutor;
 
 /**
  * Describe your class

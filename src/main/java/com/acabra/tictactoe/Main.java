@@ -1,8 +1,10 @@
 
-package control;
+package com.acabra.tictactoe;
 
 import java.util.Locale;
-import view.ViewType;
+
+import com.acabra.tictactoe.control.GameController;
+import com.acabra.tictactoe.view.ViewType;
 
 /**
  * Describe your class
@@ -19,6 +21,6 @@ public class Main {
             String[] localeArgs = args[1].split("_");
             locale = new Locale(localeArgs[0], localeArgs[1]);
         }
-        (new GameController(locale)).play(type, 3, 3);
+        GameController.of(locale).play(type, 3, 3);
     }
 }

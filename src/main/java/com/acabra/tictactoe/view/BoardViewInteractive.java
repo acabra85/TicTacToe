@@ -1,14 +1,14 @@
 
-package view;
+package com.acabra.tictactoe.view;
 
-import control.GameActionExecutor;
+import com.acabra.tictactoe.control.GameActionExecutor;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import model.Turn;
-import utils.ResourceBundleUTF8;
+import com.acabra.tictactoe.model.Turn;
+import com.acabra.tictactoe.utils.ResourceBundleUTF8;
 
 /**
  * This class represents a board that responds to user clicks

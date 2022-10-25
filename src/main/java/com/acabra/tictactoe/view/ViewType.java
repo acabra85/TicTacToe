@@ -1,5 +1,5 @@
 
-package view;
+package com.acabra.tictactoe.view;
 
 /**
  * Describe your class

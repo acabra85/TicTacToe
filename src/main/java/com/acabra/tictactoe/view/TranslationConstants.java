@@ -1,5 +1,5 @@
 
-package view;
+package com.acabra.tictactoe.view;
 
 /**
  * Constants of the translations bundle

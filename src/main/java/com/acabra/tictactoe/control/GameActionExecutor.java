@@ -1,9 +1,8 @@
 
-package control;
+package com.acabra.tictactoe.control;
 
-import java.util.Map;
-import model.Turn;
-import utils.ResourceBundleUTF8;
+import com.acabra.tictactoe.model.Turn;
+import com.acabra.tictactoe.utils.ResourceBundleUTF8;
 
 /**
  * Describe your class
